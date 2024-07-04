@@ -16,6 +16,11 @@ public class CustomerMovingToShopState : ICustomerState
         {
             Debug.Log("Update Move");
             customer.transform.position = Vector3.MoveTowards(customer.transform.position, _assignedLocation.position, speed * Time.deltaTime);
+            if(Vector3.Distance(customer.transform.position, _assignedLocation.position) == 0f)
+            {
+                customer.CustomerWaiting();
+                return;
+            }
         }
     }
     public void ExitState(Customer customer)

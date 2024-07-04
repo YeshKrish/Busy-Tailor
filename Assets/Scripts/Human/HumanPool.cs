@@ -47,6 +47,13 @@ namespace BusyTailor_Human
             }
             return null;
         }
+
+        internal void MoveToInactive(GameObject human)
+        {
+            human.SetActive(false);
+            RemoveFromActiveHumanList(human);
+        }
+
         internal void RemoveFromActiveHumanList(GameObject human)
         {
             if (_activeHuman.Contains(human))

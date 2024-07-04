@@ -7,13 +7,13 @@ public class HumanManager : MonoBehaviour
 {
     public static HumanManager Instance;
 
-    private HumanPool _humanPool;
+    internal HumanPool _humanPool;
     [SerializeField]
     private int _maxHumansCanBeActiveOnScene = 6;
     [SerializeField]
     private Transform _humanSpawnPoint;
     [SerializeField]
-    private float _hmaunSpawnInterval = 2f;
+    private float _hmaunSpawnInterval = 3.5f;
 
     public Transform[] WayPoints;
 
@@ -32,18 +32,25 @@ public class HumanManager : MonoBehaviour
     private void Start()
     {
         _humanPool = GetComponent<HumanPool>();
-        StartCoroutine(SpawnHumans());
+        //StartCoroutine(SpawnHumans());
+        InvokeRepeating("SpawnHumans", _hmaunSpawnInterval, 1f);
     }
 
-    private IEnumerator SpawnHumans()
+    //private IEnumerator SpawnHumans()
+    //{
+    //    while (_humanPool._activeHuman.Count < _maxHumansCanBeActiveOnScene)
+    //    {
+    //        yield return new WaitForSeconds(_hmaunSpawnInterval);
+    //        GameObject human = _humanPool.FetchHuman();
+    //        human.transform.position = _humanSpawnPoint.position;
+    //        human.GetComponent<Human>().WalkingState();
+    //    }
+    //} 
+    private void SpawnHumans()
     {
-        while (_humanPool._activeHuman.Count < _maxHumansCanBeActiveOnScene)
-        {
-            yield return new WaitForSeconds(_hmaunSpawnInterval);
-            GameObject human = _humanPool.FetchHuman();
-            human.transform.position = _humanSpawnPoint.position;
-            human.GetComponent<Human>().WalkingState();
-        }
+        GameObject human = _humanPool.FetchHuman();
+        human.transform.position = _humanSpawnPoint.position;
+        human.GetComponent<Human>().WalkingState();
     }
 
     //private IEnumerator Spawn() 

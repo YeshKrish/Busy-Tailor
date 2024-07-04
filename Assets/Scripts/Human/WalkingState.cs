@@ -34,7 +34,8 @@ public class WalkingState : IHumanState
                 }
                 else if (currentWaypointIndex == 2)
                 {
-                   
+                    HumanManager.Instance._humanPool.MoveToInactive(human.gameObject);
+                    return;
                 }
                 currentWaypointIndex++;
             }
