@@ -36,7 +36,11 @@ public class Customer : Human
     {
         TransitionState(new CustomerReceivedOrderState());
     }
-
+    public override void BecomeHuman()
+    {
+        GetComponent<Human>().enabled = true;
+        base.BecomeHuman();
+    }
 }
 
 

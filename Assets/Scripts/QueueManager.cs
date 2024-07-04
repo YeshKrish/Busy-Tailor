@@ -85,6 +85,32 @@ public class QueueManager : MonoBehaviour
         }
     }
 
+    public Dictionary<Customer, int> FetchCustomerFromQueue()
+    {
+        Dictionary<Customer, int> customerDict = new Dictionary<Customer, int>();
+
+        if (_customerQueue.Count > 0)
+        {
+            Transform pos;
+            Customer customer = _customerQueue.Peek();
+
+            if (_allocatedPositionDict.TryGetValue(customer, out pos))
+            {
+                for (int i = 0; i <= _waitingPoints.Length; i++)
+                {
+                    if (_waitingPoints[i].position == pos.position)
+                    {
+                        customerDict[customer] = i;
+                        return customerDict;
+                    }
+                }
+            }
+        }
+
+        return customerDict;  
+    }
+
+
     internal Transform FetchAssignedPoint(Customer customer)
     {
         if (_allocatedPositionDict.Count > 0)

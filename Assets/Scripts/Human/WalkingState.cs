@@ -29,6 +29,7 @@ public class WalkingState : IHumanState
                 {
                     if (human.TryBecomeCustomer())
                     {
+                        currentWaypointIndex++;
                         return;   
                     }
                 }

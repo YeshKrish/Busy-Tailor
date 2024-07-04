@@ -57,4 +57,18 @@ public class Human : MonoBehaviour
             this.enabled = false;
         }
     }
+
+    public virtual void BecomeHuman()
+    {
+        Customer customer = gameObject.GetComponent<Customer>();
+        if(customer != null)
+        {
+            Destroy(customer);
+            WalkingState();
+        }
+        else
+        {
+            Debug.Log("Customer Missing");
+        }
+    }
 }
