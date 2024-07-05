@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,32 +6,63 @@ using UnityEngine;
 
 public class RewardManager : MonoBehaviour
 {
+    public static RewardManager Instance;
+
     public TMP_Text RewardText;
     public bool RefreshRewardForEachMatch;
 
     [SerializeField]
     private RewardSo reward;
+    public int CurrentReward;
+    public static event Action<int> CollectReward;
+
+    [HideInInspector]
+    public int PresentRewardAmount = 0;
+
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Start()
     {
         if (RefreshRewardForEachMatch)
         {
-            reward.CurrentRewardCount = 0;
+            CurrentReward = 0;
         }
     }
 
-    private void OnEnable()
+    public void AddReward()
     {
-        RewardSo.CollectReward += AddRewardToUI;
+        PresentRewardAmount += CurrentReward;
+        Debug.Log("Current Reward In AddReward" + CurrentReward + " PresentReward" + PresentRewardAmount);
+        CollectReward?.Invoke(PresentRewardAmount);
+        AddRewardToUI();
     }
 
-    public void AddRewardToUI(int count)
+    public void AddRewardToUI()
     {
-        RewardText.text = count.ToString();
+        Debug.Log("Reward To Be Added" + PresentRewardAmount);
+        RewardText.text = PresentRewardAmount.ToString();
     }
 
-    private void OnDisable()
+    public void SetCurrentRewardAmount(int amount)
     {
-        RewardSo.CollectReward -= AddRewardToUI;
+        CurrentReward = amount;
+        Debug.Log("Current Reward" + CurrentReward);
+    }
+
+    public void ReducePresentRewardAmount(int amtToReduce)
+    {
+        PresentRewardAmount -= amtToReduce;
+        AddRewardToUI();
     }
 }
