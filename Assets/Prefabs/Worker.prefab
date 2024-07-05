@@ -474,6 +474,7 @@ MonoBehaviour:
   _workPoint: {fileID: 0}
   _timerImage: {fileID: 1940174402316214093}
   _cloth: {fileID: 1867167304384667932}
+  _reward: {fileID: 11400000, guid: 87e08032fb925c24bba7e41efe3b3a10, type: 2}
 --- !u!1001 &4956394465536980357
 PrefabInstance:
   m_ObjectHideFlags: 0
