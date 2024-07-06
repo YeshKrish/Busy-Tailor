@@ -2,73 +2,85 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Human : MonoBehaviour
+namespace BusyTailor_Human
 {
-    private IHumanState _currentState;
-    private QueueManager _queueManager;
-
-    [SerializeField]
-    private float _turningCustomerProbability = 0.5f;
-
-
-    public void WalkingState()
+    public class Human : MonoBehaviour
     {
-        TransitionState(new WalkingState());
-    }
+        private IHumanState _currentState;
+        private QueueManager _queueManager;
 
-    public void TransitionState(IHumanState state)
-    {
-        _currentState?.ExitState(this);
-        _currentState = state;
-        _currentState.EnterState(this);
-    }
+        [SerializeField]
+        private float _turningCustomerProbability = 0.5f;
 
-    void Update()
-    {
+        [Header("Human Properties")]
+        public int currentWaypointIndex = 0;
+        public float speed = 2f;
+        public float waypointReachedThreshold = 0.1f;
 
-        if(_queueManager == null)
+        [Header("Customer Requirement UI")]
+        [SerializeField]
+        internal GameObject _orderingUI;
+
+        public void WalkingState()
         {
-            _queueManager = QueueManager.Instance;
+            TransitionState(new WalkingState());
         }
-        _currentState?.UpdateState(this);
-    }
 
-    public bool TryBecomeCustomer()
-    {
-        if (_queueManager.HasSpace())
+        public void TransitionState(IHumanState state)
         {
-            if(Random.value < _turningCustomerProbability)
+            _currentState?.ExitState(this);
+            _currentState = state;
+            _currentState.EnterState(this);
+        }
+
+        void Update()
+        {
+
+            if(_queueManager == null)
             {
-                BecomeCustomer();
-                return true;
+                _queueManager = QueueManager.Instance;
+            }
+            _currentState?.UpdateState(this);
+        }
+
+        public bool TryBecomeCustomer()
+        {
+            if (_queueManager.HasSpace())
+            {
+                if(Random.value < _turningCustomerProbability)
+                {
+                    BecomeCustomer();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void BecomeCustomer()
+        {
+            var customer = gameObject.AddComponent<Customer>();
+            if (_queueManager.AddToQueue(customer))
+            {
+                //customer.MemberwiseClone();
+                customer.MovingTowardsShop();
+                customer.SetOderUI(_orderingUI);
+                this.enabled = false;
             }
         }
-        return false;
+
+        public virtual void BecomeHuman()
+        {
+            Customer customer = gameObject.GetComponent<Customer>();
+            if(customer != null)
+            {
+                Destroy(customer);
+                WalkingState();
+            }
+            else
+            {
+                Debug.Log("Customer Missing");
+            }
+        }
     }
 
-    private void BecomeCustomer()
-    {
-        var customer = gameObject.AddComponent<Customer>();
-        if (_queueManager.AddToQueue(customer))
-        {
-            //customer.MemberwiseClone();
-            customer.MovingTowardsShop();
-            this.enabled = false;
-        }
-    }
-
-    public virtual void BecomeHuman()
-    {
-        Customer customer = gameObject.GetComponent<Customer>();
-        if(customer != null)
-        {
-            Destroy(customer);
-            WalkingState();
-        }
-        else
-        {
-            Debug.Log("Customer Missing");
-        }
-    }
 }

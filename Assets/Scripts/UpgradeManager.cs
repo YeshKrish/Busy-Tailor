@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -24,7 +22,11 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField]
     private GameObject _upgradeWarningPanel;    
     [SerializeField]
-    private GameObject _upgradePanel; 
+    private GameObject _upgradePanel;
+    [SerializeField]
+    private Image _progressBar;
+
+    private int _progressBarTresholdLevel = 10;
 
     private int _currentLevel = 1;
     private int _currentReward = 3;
@@ -68,7 +70,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void CheckForUpgrade(int currentRewardTotal)
     {
-        if (currentRewardTotal > _currentUpgradeCost)
+        if (currentRewardTotal >= _currentUpgradeCost)
         {
             Debug.Log("Can Upgrade Now");
             if (!_upgradePanel.activeSelf)
@@ -81,9 +83,10 @@ public class UpgradeManager : MonoBehaviour
 
     public void OnRewardButtonClick()
     {
-        if(_rewardManager.PresentRewardAmount > _currentUpgradeCost)
+        if(_rewardManager.PresentRewardAmount >= _currentUpgradeCost)
         {
             _currentLevel++;
+            UpdateProgressBar();
             _rewardManager.ReducePresentRewardAmount(_currentUpgradeCost);
 
             _currentUpgradeCost = CalculateNextUpgradeCost();
@@ -92,7 +95,14 @@ public class UpgradeManager : MonoBehaviour
             UpdateTextFields();
         }
     }
+    private void UpdateProgressBar()
+    {
+        int levelInCurrentRange = (_currentLevel - 1) % 10 + 1;
+        float progress = levelInCurrentRange / 10f;
 
+
+        _progressBar.fillAmount = progress;
+    }
     private void UpdateTextFields()
     {
         _upgradeText.text = _currentUpgradeCost.ToString();

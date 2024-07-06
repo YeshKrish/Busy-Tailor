@@ -33,7 +33,7 @@ public class HumanManager : MonoBehaviour
     {
         _humanPool = GetComponent<HumanPool>();
         //StartCoroutine(SpawnHumans());
-        InvokeRepeating("SpawnHumans", _hmaunSpawnInterval, 1f);
+        InvokeRepeating("SpawnHumans", 0f, _hmaunSpawnInterval);
     }
 
     //private IEnumerator SpawnHumans()
@@ -52,7 +52,7 @@ public class HumanManager : MonoBehaviour
         human.transform.position = _humanSpawnPoint.position;
         human.GetComponent<Human>().WalkingState();
     }
-
+    
     //private IEnumerator Spawn() 
     //{
     //    yield return new WaitForSeconds(_hmaunSpawnInterval);

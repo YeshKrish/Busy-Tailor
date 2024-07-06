@@ -1,3 +1,4 @@
+using BusyTailor_Human;
 public interface IHumanState
 {
     void EnterState(Human human);

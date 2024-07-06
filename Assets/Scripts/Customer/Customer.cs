@@ -7,7 +7,8 @@ using BusyTailor_Human;
 public class Customer : Human
 {
     private ICustomerState _currentState;
-
+    [Header("Customer Requirement UI")]
+    private GameObject _orderingUI;
     private void TransitionState(ICustomerState customerState)
     {
         _currentState?.ExitState(this);
@@ -40,6 +41,18 @@ public class Customer : Human
     {
         GetComponent<Human>().enabled = true;
         base.BecomeHuman();
+    }
+    internal void ActivateOderingUI()
+    {
+        _orderingUI.SetActive(true);
+    }
+    internal void DeactivateOderingUI()
+    {
+        _orderingUI.SetActive(false);
+    }
+    internal void SetOderUI(GameObject ui)
+    {
+        _orderingUI = ui;
     }
 }
 
