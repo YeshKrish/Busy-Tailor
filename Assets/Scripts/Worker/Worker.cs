@@ -27,10 +27,6 @@ namespace BusyTailor_Worker
         private float _speed = 2f;
         private float _distanceTreshold = 0.1f;
 
-        [Header("Reward")]
-        [SerializeField]
-        internal RewardSo _reward;
-
         private void Start()
         {
             IdleWorkerState();

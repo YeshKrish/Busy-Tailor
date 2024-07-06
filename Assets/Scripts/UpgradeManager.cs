@@ -4,14 +4,6 @@ using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
-    [SerializeField]
-    private RewardSo _reward;
-
-    //[SerializeField]
-    //private int _nextUpgradeCost;
-    //[SerializeField]
-    //private int _nextRewardAmount;
-
     [Header("Text Fields")]
     [SerializeField]
     private TMP_Text _upgradeText; 

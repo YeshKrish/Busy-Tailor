@@ -11,8 +11,6 @@ public class RewardManager : MonoBehaviour
     public TMP_Text RewardText;
     public bool RefreshRewardForEachMatch;
 
-    [SerializeField]
-    private RewardSo reward;
     public int CurrentReward;
     public static event Action<int> CollectReward;
 

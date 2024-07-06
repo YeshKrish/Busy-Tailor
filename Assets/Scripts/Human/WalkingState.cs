@@ -9,33 +9,33 @@ public class WalkingState : IHumanState
     public void UpdateState(Human human) 
     {
         Debug.Log("Waling Update");
-        if (human.currentWaypointIndex < HumanManager.Instance.WayPoints.Length)
+        if (human.CurrentWaypointIndex < HumanManager.Instance.WayPoints.Length)
         {
-            Transform targetWaypoint = HumanManager.Instance.WayPoints[human.currentWaypointIndex];
+            Transform targetWaypoint = HumanManager.Instance.WayPoints[human.CurrentWaypointIndex];
             Vector3 direction = (targetWaypoint.position - human.transform.position).normalized;
             float distance = Vector3.Distance(human.transform.position, targetWaypoint.position);
 
             // Move the player
-            human.transform.position = Vector3.MoveTowards(human.transform.position, targetWaypoint.position, human.speed * Time.deltaTime);
+            human.transform.position = Vector3.MoveTowards(human.transform.position, targetWaypoint.position, human.Speed * Time.deltaTime);
 
             // Check if the player has reached the waypoint
-            if (distance < human.waypointReachedThreshold)
+            if (distance < human.WaypointReachedThreshold)
             {
-                if (human.currentWaypointIndex == 1)
+                if (human.CurrentWaypointIndex == 1)
                 {
                     if (human.TryBecomeCustomer())
                     {
-                        human.currentWaypointIndex++;
+                        human.CurrentWaypointIndex++;
                         return;   
                     }
                 }
-                else if (human.currentWaypointIndex == 2)
+                else if (human.CurrentWaypointIndex == 2)
                 {
                     HumanManager.Instance._humanPool.MoveToInactive(human.gameObject);
-                    human.currentWaypointIndex = 0;
+                    human.CurrentWaypointIndex = 0;
                     return;
                 }
-                human.currentWaypointIndex++;
+                human.CurrentWaypointIndex++;
             }
         }
     }

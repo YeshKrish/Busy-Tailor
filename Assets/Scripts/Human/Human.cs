@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BusyTailor_Human
@@ -13,9 +11,9 @@ namespace BusyTailor_Human
         private float _turningCustomerProbability = 0.5f;
 
         [Header("Human Properties")]
-        public int currentWaypointIndex = 0;
-        public float speed = 2f;
-        public float waypointReachedThreshold = 0.1f;
+        public int CurrentWaypointIndex = 0;
+        public float Speed = 2f;
+        public float WaypointReachedThreshold = 0.1f;
 
         [Header("Customer Requirement UI")]
         [SerializeField]
