@@ -1,4 +1,7 @@
+using DG.Tweening;
+using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +24,7 @@ public class UpgradeManager : MonoBehaviour
     private int _progressBarTresholdLevel = 10;
 
     private int _currentLevel = 1;
-    private int _currentReward = 3;
+    private int _currentReward;
     private int _currentUpgradeCost = 5;
 
     [Header("Upgrade Properties")]
@@ -38,11 +41,15 @@ public class UpgradeManager : MonoBehaviour
 
     public LayerMask _upgradeUILayer;
 
+    public static event Action<int> ClothPriceChange;
+
 
     private void Start()
     {
         _rewardManager = RewardManager.Instance;
         _rewardManager.SetCurrentRewardAmount(_baseReward);
+        _currentReward = _baseReward;
+        ClothPriceChange?.Invoke(_baseReward);
     }
 
     private void Update()
@@ -84,6 +91,7 @@ public class UpgradeManager : MonoBehaviour
             _currentUpgradeCost = CalculateNextUpgradeCost();
             _currentReward = CalculateNextRewardAmountCost();
             _rewardManager.SetCurrentRewardAmount(_currentReward);
+            ClothPriceChange?.Invoke(_currentReward);
             UpdateTextFields();
         }
     }
@@ -165,7 +173,6 @@ public class UpgradeManager : MonoBehaviour
 
         return randomValue < probability;
     }
-
     private void OnDisable()
     {
         RewardManager.CollectReward -= CheckForUpgrade;

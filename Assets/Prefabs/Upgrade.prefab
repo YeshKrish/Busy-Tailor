@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 5611562006315430218}
   - component: {fileID: 2988577920698739605}
   - component: {fileID: 3301759939560348154}
+  - component: {fileID: 8445239354818891667}
   m_Layer: 7
   m_Name: UpgradeWarning
   m_TagString: Untagged
@@ -674,6 +675,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8445239354818891667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3551509969306130248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3933015bd691b41bde1389571405e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3744382443616856273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,13 +1071,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5342fdbf7cd0e5489155f34f6fe0e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _reward: {fileID: 11400000, guid: 87e08032fb925c24bba7e41efe3b3a10, type: 2}
   _upgradeText: {fileID: 2666241597185104478}
   _rewardAmountText: {fileID: 1025330277547632615}
   _currentLevelText: {fileID: 3426443307511311583}
   _upgradeWarningPanel: {fileID: 3551509969306130248}
   _upgradePanel: {fileID: 5378847667370415031}
   _progressBar: {fileID: 5370650958330565675}
+  JiggleDuration: 0.5
+  JiggleStrength: 10
+  JiggleVibrato: 10
   _upgradeUILayer:
     serializedVersion: 2
     m_Bits: 128

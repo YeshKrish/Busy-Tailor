@@ -9,7 +9,7 @@ public class OrderCompletedState : IWorkerState
         worker._cloth.SetActive(false);
         worker._presentCustomer.CustomerReceivedOrder();
         worker._presentCustomer = null;
-        worker._presentCustomerOrderPos = null;
+        worker._presentCustomerOrderPos = null; 
         worker.IdleWorkerState();
     }
 
@@ -19,6 +19,7 @@ public class OrderCompletedState : IWorkerState
 
     public void ExitState(Worker worker)
     {
-
+        worker._coinBurst.SetActive(true);
+        worker.StopCoinVFX();
     }
 }

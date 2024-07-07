@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,10 @@ namespace BusyTailor_Worker
         private Image _timerImage;
         [SerializeField]
         internal GameObject _cloth;
+        [SerializeField]
+        internal TMP_Text _clothPrice;
+        [SerializeField]
+        internal GameObject _coinBurst;
 
         internal Transform _presentCustomerOrderPos;
         internal Customer _presentCustomer;
@@ -27,9 +32,15 @@ namespace BusyTailor_Worker
         private float _speed = 2f;
         private float _distanceTreshold = 0.1f;
 
+
         private void Start()
         {
             IdleWorkerState();
+        }
+
+        private void OnEnable()
+        {
+            UpgradeManager.ClothPriceChange += SetClothPrice;
         }
 
         public void TransitionState(IWorkerState state)
@@ -123,6 +134,27 @@ namespace BusyTailor_Worker
                 return true;
             }
             return false;
+        }
+
+        private void SetClothPrice(int price)
+        {
+            _clothPrice.text = price.ToString();
+        }
+
+        private void OnDisable()
+        {
+            UpgradeManager.ClothPriceChange -= SetClothPrice;
+        }
+
+        internal void StopCoinVFX()
+        {
+            StartCoroutine("StopVFX");
+        }
+
+        private IEnumerator StopVFX()
+        {
+            yield return new WaitForSeconds(_coinBurst.GetComponent<ParticleSystem>().main.duration + 1);
+            _coinBurst.SetActive(false);
         }
     }
 }
